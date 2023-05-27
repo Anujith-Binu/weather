@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="search-box">
+
+                <input type="text" placeholder="Enter your location" class="input-box" id="searchid">
+                <i class="fa-solid fa-magnifying-glass" id="ic" onclick="searchWeather()"></i>
+
+            </div>
+        </div>
+
+        <div id="result">
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+</body>
+<script src="https://kit.fontawesome.com/595a890311.js" crossorigin="anonymous"></script>
+
+<script>
+
+    function searchWeather() {
+        city = searchid.value
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b41ec3be35c7dac8aabbc21ba253137a`).then(data => data.json).then(out=>displayData(out))
+
+        function displayData(CityData){
+            
+            temperatur= Math.floor(CityData.main.temp - 273.15)
+            humidit = CityData.main.humidity
+            windspee = Math.floor(CityData.wind.speed )
+
+
+            result.innerHTML=`
+            
+            <div class="weather-body">
+            <img src="./image/weather-app.png" alt="Weather Image" class="weather-img">
+
+            <div class="weather-box">
+                <p class="temperature">${temperatur}<sup>°C</sup></p>
+                <p class="description">light rain</p>
+            </div>
+
+            <div class="weather-details">
+                <div class="humidity">
+                    <i class="fa-sharp fa-solid fa-droplet"></i>
+                    <div class="text">
+                        <span id="humidi">${humidit}</span>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+
+                <div class="wind">
+                    <i class="fa-solid fa-wind"></i>
+                    <div class="text">
+                        <span id="wind-speed">${windspee}<sup>Km/H</sup></span>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            ` 
+            
+
+        }
+    }
+
+
+
+</script>
+
+
+
+</html>
